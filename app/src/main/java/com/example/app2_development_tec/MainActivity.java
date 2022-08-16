@@ -52,18 +52,14 @@ public class MainActivity extends AppCompatActivity {
 
         initializeSpinner(R.id.spnMathTypes);
 
-        btnOpenMenu.setOnClickListener(v -> showPopOpMathMenu());
+        btnOpenMenu.setOnClickListener(v -> showPopUpMathMenu());
 
         btnCalculate.setOnClickListener(v -> calculate());
 
         spnMathTypes.setOnItemSelectedListener(new setOnItemSelectedListenerHandler(this));
-
-
     }
 
-
-
-    public void showPopOpMathMenu()
+    public void showPopUpMathMenu()
     {
         PopupMenu popupMenu = new PopupMenu(this, btnOpenMenu);
 
@@ -71,13 +67,10 @@ public class MainActivity extends AppCompatActivity {
             popupMenu.getMenu().add(Menu.NONE, i, Menu.NONE, mathActions.get(i));
         }
 
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                selectedAction = menuItem.toString();
-                calculate();
-                return true;
-            }
+        popupMenu.setOnMenuItemClickListener(menuItem -> {
+            selectedAction = menuItem.toString();
+            calculate();
+            return true;
         });
         popupMenu.show();
     }
@@ -86,9 +79,7 @@ public class MainActivity extends AppCompatActivity {
     {
         int input1 = Integer.parseInt(edtIntegerInput1.getText().toString());
         int input2 = Integer.parseInt(edtIntegerInput2.getText().toString());
-        Log.d(TAG, "Input1: " + input1 );
-        Log.d(TAG, "Input2: " + input2 );
-        Log.d(TAG, "SelectedAction: " + selectedAction );
+
         switch (selectedAction)
         {
             case "+":
@@ -119,7 +110,6 @@ public class MainActivity extends AppCompatActivity {
 
     public class setOnItemSelectedListenerHandler implements AdapterView.OnItemSelectedListener
     {
-
         private MainActivity theActivity;
 
         public setOnItemSelectedListenerHandler(MainActivity activity)
